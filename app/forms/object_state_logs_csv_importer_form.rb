@@ -16,8 +16,10 @@ class ObjectStateLogsCsvImporterForm < BaseForm
           object_changes: object_changes
         )
       end
+      true
     end
-  rescue ActiveRecord::RecordInvalid
+  rescue ActiveRecord::RecordInvalid => invalid
+    add_to_base_errors(invalid)
   rescue CSV::MalformedCSVError
   end
 
