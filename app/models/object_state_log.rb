@@ -10,6 +10,6 @@ class ObjectStateLog < ApplicationRecord
   validates :object_id,
             uniqueness: {
               scope: [:object_type, :timestamp],
-              message: "id, type and timestamp must be unique"
+              message: "with the same id, type and timestamp already exists"
             }
 end
