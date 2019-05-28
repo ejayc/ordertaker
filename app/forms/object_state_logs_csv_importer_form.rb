@@ -5,8 +5,9 @@ class ObjectStateLogsCsvImporterForm < BaseForm
 
   def save
     ObjectStateLog.transaction do
-      CSV.parse(csv_file.read.gsub('\"','""')) do |row|
-        object_id, object_type, timestamp, object_changes = row
+      File.foreach(csv_file.path) do |file_line|
+        escaped_csv_line = escape_double_quotes_in_csv_line(file_line)
+        object_id, object_type, timestamp, object_changes = CSV.parse_line(escaped_csv_line)
 
         ObjectStateLog.create!(
           object_id: object_id,
@@ -18,5 +19,11 @@ class ObjectStateLogsCsvImporterForm < BaseForm
     end
   rescue ActiveRecord::RecordInvalid
   rescue CSV::MalformedCSVError
+  end
+
+  private
+
+  def escape_double_quotes_in_csv_line(csv_line)
+    csv_line.gsub('\"','""')
   end
 end
