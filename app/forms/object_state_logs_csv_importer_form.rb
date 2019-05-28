@@ -15,7 +15,9 @@ class ObjectStateLogsCsvImporterForm < BaseForm
     save_all_object_state_logs!
   rescue ActiveRecord::RecordInvalid => invalid
     add_to_base_errors(invalid)
-  rescue CSV::MalformedCSVError
+  rescue CSV::MalformedCSVError => csv_error
+    errors.add(:base, csv_error.message)
+    false
   end
 
   private
