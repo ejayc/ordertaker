@@ -10,6 +10,7 @@ gem 'rails', '~> 5.2.3'
 gem 'pg'
 
 gem 'slim'
+gem 'virtus'
 
 # Use Puma as the app server
 gem 'puma', '~> 3.11'
@@ -52,6 +53,7 @@ group :development do
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'better_errors'
+  gem 'binding_of_caller'
 end
 
 group :test do

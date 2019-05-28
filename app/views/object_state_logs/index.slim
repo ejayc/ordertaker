@@ -1,0 +1,3 @@
+= form_tag import_object_state_logs_path, multipart: true, name: "object_state_logs" do
+  = file_field_tag :csv_file, accept: ".csv"
+  = submit_tag "Start"
