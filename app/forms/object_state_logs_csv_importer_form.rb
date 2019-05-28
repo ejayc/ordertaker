@@ -1,15 +1,14 @@
 class ObjectStateLogsCsvImporterForm < BaseForm
   require 'csv'
 
-  attribute :csv_file, File
+  attribute :csv_file, File, default: nil
+  attribute :object_state_logs_from_csv, Array[ObjectStateLog], default: []
 
-  def initialize(params)
-    @object_state_logs_from_csv = []
-
-    super(params)
-  end
+  validates_presence_of :csv_file
 
   def save
+    return false unless valid?
+
     initialize_object_state_logs_from_csv
     validate_all_object_state_logs!
     save_all_object_state_logs!
@@ -24,7 +23,7 @@ class ObjectStateLogsCsvImporterForm < BaseForm
 
   def save_all_object_state_logs!
     ObjectStateLog.transaction do
-      @object_state_logs_from_csv.each(&:save!)
+      object_state_logs_from_csv.each(&:save!)
     end
   end
 
@@ -38,7 +37,7 @@ class ObjectStateLogsCsvImporterForm < BaseForm
   end
 
   def collect_error_messages
-    @object_state_logs_from_csv.map.with_index(1) do |object_state_log_from_csv, row_number|
+    object_state_logs_from_csv.map.with_index(1) do |object_state_log_from_csv, row_number|
       unless object_state_log_from_csv.valid?
         "Error on row #{row_number}: #{object_state_log_from_csv.errors.full_messages.to_sentence}"
       end
@@ -50,7 +49,7 @@ class ObjectStateLogsCsvImporterForm < BaseForm
       escaped_csv_line = escape_double_quotes_in_csv_line(file_line)
       object_id, object_type, timestamp, object_changes = CSV.parse_line(escaped_csv_line)
 
-      @object_state_logs_from_csv << ObjectStateLog.new(
+      object_state_logs_from_csv << ObjectStateLog.new(
         object_id: object_id,
         object_type: object_type,
         timestamp: Time.at(timestamp.to_i),
