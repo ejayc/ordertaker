@@ -10,9 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 0) do
+ActiveRecord::Schema.define(version: 2019_05_28_132737) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "object_state_logs", force: :cascade do |t|
+    t.integer "object_id", null: false
+    t.string "object_type", null: false
+    t.datetime "timestamp", null: false
+    t.json "object_changes", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["object_id", "object_type", "timestamp"], name: "object_state_logs_uniq_id_type_timestamp", unique: true
+  end
 
 end

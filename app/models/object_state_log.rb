@@ -1,0 +1,2 @@
+class ObjectStateLog < ApplicationRecord
+end
