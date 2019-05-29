@@ -3,7 +3,7 @@ br
 hr
 
 h1 Search
-- if @object_types.present?
+- if @object_state_logs_count > 0
   p= "Total number of records: #{@object_state_logs_count}"
   = render "search_form", object_types: @object_types
   br
