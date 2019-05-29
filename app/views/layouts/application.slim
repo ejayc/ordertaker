@@ -8,7 +8,14 @@ html
     = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
 
-  body
-    - flash.each do |key, value|
-      .alert class="alert-#{key}" = value
-    = yield
+  body class="ordertaker"
+    .container-fluid
+      .row
+        .col
+          - flash.each do |key, value|
+            .alert.alert-dismissible.fade.show class=bootstrap_class_for(key)
+              = value
+              button type="button" class="close" data-dismiss="alert" aria-label="Close"
+                span aria-hidden="true" &times;
+      .row
+        .col= yield

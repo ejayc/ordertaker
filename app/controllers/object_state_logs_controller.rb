@@ -15,9 +15,9 @@ class ObjectStateLogsController < ApplicationController
     csv_importer_form = ObjectStateLogsCsvImporterForm.new(object_state_logs_param)
 
     if csv_importer_form.save
-      flash[:notice] = "Your data have been imported!"
+      flash[:success] = "Your data have been imported!"
     else
-      flash[:alert] = csv_importer_form.full_error_messages
+      flash[:error] = csv_importer_form.full_error_messages
     end
 
     redirect_to object_state_logs_path

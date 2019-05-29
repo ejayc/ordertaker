@@ -11,6 +11,8 @@ gem 'pg'
 
 gem 'slim'
 gem 'virtus'
+gem 'bootstrap', '~> 4.3.1'
+gem 'jquery-rails'
 
 # Use Puma as the app server
 gem 'puma', '~> 3.11'
