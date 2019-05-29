@@ -82,5 +82,4 @@ test:
 production:
   <<: *default
   database: ordertaker_production
-  username: ordertaker
-  password: <%= ENV['ORDERTAKER_DATABASE_PASSWORD'] %>
+  url: <%= ENV['DATABASE_URL'] %>
