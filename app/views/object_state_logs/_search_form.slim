@@ -1,9 +1,20 @@
 = form_tag object_state_logs_path, method: :get do
-  = select_tag :object_type, options_for_select(object_types, params[:object_type]), required: true
-  = text_field_tag :object_id, params[:object_id], placeholder: "Object id", required: true
-  = text_field_tag :timestamp, params[:timestamp], placeholder: "Timestamp", required: true
-  = submit_tag "Search", name: nil
-
-  - if search_params_present?
-    = link_to "Clear", object_state_logs_path
-
+  .form-row
+    .col
+      .form-group
+        = label_tag "Object Type"
+        = select_tag :object_type, options_for_select(object_types, params[:object_type]), required: true, class: "custom-select"
+    .col
+      .form-group
+        = label_tag "Object Id"
+        = text_field_tag :object_id, params[:object_id], placeholder: "e.g. 1", required: true, class: "form-control"
+    .col
+      .form-group
+        = label_tag "Timestamp"
+        = text_field_tag :timestamp, params[:timestamp], placeholder: "e.g. 1484732821", required: true, class: "form-control"
+  .form-row
+    .col
+      = submit_tag "Search", name: nil, class: "btn btn-primary"
+      - if search_params_present?
+        | &nbsp;
+        = link_to "Reset", object_state_logs_path, class: "btn btn-outline-primary"

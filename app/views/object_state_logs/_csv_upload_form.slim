@@ -1,5 +1,16 @@
-h1 Import a CSV File
+.card
+  .card-header
+    h4 Import a CSV File
 
-= form_tag import_object_state_logs_path, multipart: true, name: "object_state_logs" do
-  = file_field_tag :csv_file, accept: ".csv", required: true
-  = submit_tag "Import"
+  .card-body
+    .alert.alert-info
+      h5 Sample CSV Format
+      p
+        | 1,Invoice,1484732821,"{\"status\":\"paid\"}"
+        br
+        | 1,Product,1484731172,"{\"name\":\"Laptop\",\"price\":2100,\"stock_levels\":29}"
+    br
+    = form_tag import_object_state_logs_path, multipart: true, name: "object_state_logs" do
+      .form-group
+        = file_field_tag :csv_file, accept: ".csv", required: true, class: "form-control-file"
+      = submit_tag "Import CSV", class: "btn btn-primary"
