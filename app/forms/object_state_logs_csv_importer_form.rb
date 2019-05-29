@@ -1,7 +1,7 @@
 class ObjectStateLogsCsvImporterForm < BaseForm
   require 'csv'
 
-  attribute :csv_file, File, default: nil
+  attribute :csv_file, File, default: nil, coerce: false
   attribute :object_state_logs_from_csv, Array[ObjectStateLog], default: []
 
   validates_presence_of :csv_file
@@ -12,6 +12,7 @@ class ObjectStateLogsCsvImporterForm < BaseForm
     initialize_object_state_logs_from_csv
     validate_all_object_state_logs!
     save_all_object_state_logs!
+    true
   rescue ActiveRecord::RecordInvalid => invalid
     add_to_base_errors(invalid)
   rescue CSV::MalformedCSVError => csv_error
@@ -29,7 +30,6 @@ class ObjectStateLogsCsvImporterForm < BaseForm
 
   def validate_all_object_state_logs!
     error_messages = collect_error_messages
-
     if error_messages.any?
       errors.add(:base, error_messages.join("\n"))
       raise ActiveRecord::RecordInvalid.new(self)
@@ -41,7 +41,7 @@ class ObjectStateLogsCsvImporterForm < BaseForm
       unless object_state_log_from_csv.valid?
         "Error on row #{row_number}: #{object_state_log_from_csv.errors.full_messages.to_sentence}"
       end
-    end
+    end.compact
   end
 
   def initialize_object_state_logs_from_csv
