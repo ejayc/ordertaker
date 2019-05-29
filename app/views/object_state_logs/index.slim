@@ -11,6 +11,7 @@ br
       = render "search_form", object_types: @object_types
 
       - if search_params_present?
+        hr
         = render "search_result", result: @search_result
     - else
       em There are no records for searching yet. Please upload a CSV file first.
