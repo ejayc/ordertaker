@@ -1,0 +1,9 @@
+= form_tag object_state_logs_path, method: :get do
+  = select_tag :object_type, options_for_select(object_types, params[:object_type]), required: true
+  = text_field_tag :object_id, params[:object_id], placeholder: "Object id", required: true
+  = text_field_tag :timestamp, params[:timestamp], placeholder: "Timestamp", required: true
+  = submit_tag "Search", name: nil
+
+  - if search_params_present?
+    = link_to "Clear", object_state_logs_path
+

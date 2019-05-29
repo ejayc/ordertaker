@@ -1,50 +1,14 @@
-h1 CSV Upload
-
-= form_tag import_object_state_logs_path, multipart: true, name: "object_state_logs" do
-  = file_field_tag :csv_file, accept: ".csv", required: true
-  = submit_tag "Start"
-
+= render "csv_upload_form"
 br
 hr
 
 h1 Search
 - if @object_types.present?
   p= "Total number of records: #{@object_state_logs_count}"
-  = form_tag object_state_logs_path, method: :get do
-    = select_tag :object_type, options_for_select(@object_types, params[:object_type]), required: true
-    = text_field_tag :object_id, params[:object_id], placeholder: "Object id", required: true
-    = text_field_tag :timestamp, params[:timestamp], placeholder: "Timestamp", required: true
-    = submit_tag "Search", name: nil
-
-    - if search_params_present?
-      = link_to "Clear", object_state_logs_path
-
+  = render "search_form", object_types: @object_types
   br
   br
   - if search_params_present?
-    h2 Search Result
-
-    - if @search_result
-      table
-        tbody
-          tr
-            td
-              b Object Id:
-            td= @search_result.object_id
-          tr
-            td
-              b Object Type:
-            td= @search_result.object_type
-          tr
-            td
-              b Timestamp:
-            td= @search_result.timestamp.to_time.to_i
-          tr
-            td
-              b Object Changes:
-            td= @search_result.object_changes
-    - else
-      | No results found
-
+    = render "search_result", result: @search_result
 - else
   em There are no records for searching yet. Please upload a CSV file first.
