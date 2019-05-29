@@ -12,4 +12,8 @@ class ObjectStateLog < ApplicationRecord
               scope: [:object_type, :timestamp],
               message: "with the same id, type and timestamp already exists"
             }
+
+  def self.unique_object_types
+    distinct(:object_type).order(:object_type).pluck(:object_type)
+  end
 end
