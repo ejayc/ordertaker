@@ -13,5 +13,13 @@ Ordertaker is a Rails app that imports CSV file that contains object state logs.
 2. `rails db:create`
 3. `rails db:migrate`
 
+## Start The Application
+
+Start the server using the command below. If everything went well you should be able to access the application at http://localhost:3000
+
+```
+bin/rails s
+```
+
 ## Running the test
 This app is using RSpec for testing. You can run the test suites using: `rspec`
