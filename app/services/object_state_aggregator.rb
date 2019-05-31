@@ -12,6 +12,8 @@ class ObjectStateAggregator
   def aggregate_changes
     retrieve_object_changes_since_timestamp
     aggregate_object_changes.to_json
+  rescue ActiveRecord::StatementInvalid # Catch extremely large timestamp
+    "{}"
   end
 
   private

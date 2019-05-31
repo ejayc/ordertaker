@@ -30,6 +30,18 @@ describe ObjectStateAggregator do
 
     end
 
+    context "when timestamp value is over the limit" do
+      let(:object_state_log) { ObjectStateLog.last }
+
+      it "returns an empty state" do
+        expect(
+          described_class.generate_aggregated_state(
+            object_id: object_state_log.object_id,
+            object_type: object_state_log.object_type,
+            timestamp: 9999999999999)).to eq("{}")
+      end
+    end
+
     context "when there's single object change since the given timestamp" do
       let(:object_state_log) { ObjectStateLog.first }
 
