@@ -29,13 +29,16 @@ feature "Object state logs search form" do
 
       within ".search-card" do
         select ObjectStateLog.last.object_type, from: "object_type"
-        fill_in "object_id", with: 1241251241212
+        fill_in "object_id", with: 1241251
         fill_in "timestamp", with: Time.zone.now.to_i
         click_button "Search"
 
         within ".search-result" do
           expect(page).to have_text "Search Result"
-          expect(page).to have_text "No results found"
+        end
+
+        within ".search-result table" do
+          expect(page).to have_text "{}"
         end
       end
     end
@@ -52,9 +55,6 @@ feature "Object state logs search form" do
 
         within ".search-result" do
           expect(page).to have_text "Search Result"
-          expect(page).to have_text search_object.object_id
-          expect(page).to have_text search_object.object_type
-          expect(page).to have_text search_object.timestamp.to_i
           expect(page).to have_text search_object.object_changes
         end
       end

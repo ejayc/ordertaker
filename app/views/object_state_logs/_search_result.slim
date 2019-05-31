@@ -1,23 +1,8 @@
 .search-result
   h5 Search Result
-  - if result
-    table.table.table-dark.table-striped.table-bordered
-      tbody
-        tr
-          td
-            b Object Id:
-          td= result.object_id
-        tr
-          td
-            b Object Type:
-          td= result.object_type
-        tr
-          td
-            b Timestamp:
-          td= result.timestamp.to_time.to_i
-        tr
-          td
-            b Object Changes:
-          td= result.object_changes
-  - else
-    | No results found
+  table.table.table-dark.table-striped.table-bordered
+    tbody
+      tr
+        td
+          b Object State:
+        td= result

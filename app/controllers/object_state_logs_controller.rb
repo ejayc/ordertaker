@@ -4,7 +4,7 @@ class ObjectStateLogsController < ApplicationController
     @object_state_logs_count = ObjectStateLog.count
 
     if search_params_present?
-      @search_result = ObjectStateLog.find_by(
+      @search_result = ObjectStateAggregator.generate_aggregated_state(
         object_id: params[:object_id],
         object_type: params[:object_type],
         timestamp: Time.at(params[:timestamp].to_i))
